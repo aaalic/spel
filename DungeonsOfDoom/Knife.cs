@@ -8,7 +8,7 @@ namespace DungeonsOfDoom
 {
     class Knife : Weapon
     {
-        public Knife(): base("Knife")
+        public Knife(): base("Knife", 5)
         {
             
         }

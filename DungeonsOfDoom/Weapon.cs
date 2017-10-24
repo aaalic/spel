@@ -8,7 +8,7 @@ namespace DungeonsOfDoom
 {
     abstract class Weapon : Item
     {
-        public Weapon(string name) : base(name)
+        public Weapon(string name, int extraStrength) : base(name, extraStrength)
         {
 
         }
@@ -23,5 +23,7 @@ namespace DungeonsOfDoom
             else
                 return new Bomb();
         }
+
+        
     }
 }

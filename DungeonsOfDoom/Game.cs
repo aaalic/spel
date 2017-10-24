@@ -59,9 +59,60 @@ namespace DungeonsOfDoom
                 Room r = world[player.X, player.Y];
                 BackpackCollector(r);
 
-                player.Health--;
+                if (r.Monster != null)
+                {
+                    Console.WriteLine($"You have met a {r.Monster.CharacterName}.");
+                    Console.WriteLine($"Select an item");
+                    Console.WriteLine("BACKPACK INVENTORY:");
+                    foreach (var item in player.BackPack)
+                    {
+                        Console.WriteLine($"- {item.Name}");
+                    }
+
+                    string itemChoice = Console.ReadLine().ToLower();
+
+                    switch (itemChoice)
+                    {
+                        case "K":
+                            player.Strength += r.Item.ExtraStrength; //Hur välja knife?
+                            Console.WriteLine($"{player.Strength}");
+                            Console.ReadLine();
+                            break;
+                        default:
+                            break;
+                    }
+
+                    Console.ReadLine();
+                    while (player.Health > 0 && r.Monster.Health > 0)
+                    {
+                        player.Fight(r.Monster);
+                        Console.WriteLine($"You hit {r.Monster.CharacterName} with {player.Strength} BP");
+                        Console.WriteLine($"{r.Monster.CharacterName} health: {r.Monster.Health} HP.");
+                        Console.ReadLine();
+
+
+                        if (r.Monster.Health > 0)
+                        {
+                            r.Monster.Fight(player);
+                            Console.WriteLine($"{r.Monster.CharacterName} hit you with {r.Monster.Strength} BP.");
+                            Console.WriteLine($"{player.CharacterName} health: {player.Health} HP.");
+                            Console.ReadLine();
+                        }
+                    }
+
+                    if (r.Monster.Health <= 0)
+                    {
+                        Console.WriteLine($"You have slayed {r.Monster.CharacterName}, you are Victorius!!!");
+                        Console.ReadLine();
+
+                        r.Monster = null; // Monstret har dött!
+                    }
+                }
+
             }
         }
+
+
 
         private void BackpackCollector(Room r)
         {
@@ -76,8 +127,8 @@ namespace DungeonsOfDoom
                 string choice = (Console.ReadLine()).ToLower();
                 if (choice == "y")
                 {
-                
                     player.BackPack.Add(r.Item);
+
                     Console.WriteLine("BACKPACK INVENTORY:");
                     foreach (var item in player.BackPack)
                     {
@@ -132,7 +183,10 @@ namespace DungeonsOfDoom
                     {
                         int i = random.Next(0, 100);
                         if (i < 10)
-                            world[x, y].Monster = new Monster(30);
+                        {
+                            if (i < 7) { world[x, y].Monster = new Skeleton(30, random.Next(1, 15), "Skeletor"); }
+                            else { world[x, y].Monster = new TheHippo(60, random.Next(5, 31), "Hippoletto"); }
+                        }
 
                         else if (i >= 10 && i < 20)
                             world[x, y].Item = Weapon.GenerateRandom(random);
@@ -144,7 +198,7 @@ namespace DungeonsOfDoom
 
         private void CreatePlayer()
         {
-            player = new Player(30, 0, 0);
+            player = new Player(30, random.Next(5, 16), 0, 0, "Håkan");
         }
 
 

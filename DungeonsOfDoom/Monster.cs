@@ -8,7 +8,7 @@ namespace DungeonsOfDoom
 {
     class Monster : Character
     {
-        public Monster(int health) : base(health)
+        public Monster(int health, int strength, string characterName) : base(health, strength, characterName)
         {
             
         }

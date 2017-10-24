@@ -8,7 +8,7 @@ namespace DungeonsOfDoom
 {
     class Bomb : Weapon
     {
-        public Bomb(): base("Bomb")
+        public Bomb(): base("Bomb", 20)
         {
            
         }

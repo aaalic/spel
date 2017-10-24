@@ -8,11 +8,12 @@ namespace DungeonsOfDoom
 {
     class Sword : Weapon
     {
-        public Sword(): base("Sword")
+        public Sword(): base("Sword", 10)
         {
            
         }
 
+        
        
     }
 }

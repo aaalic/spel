@@ -8,12 +8,15 @@ namespace DungeonsOfDoom
 {
     abstract class Item
     {
-        public Item(string name)
+        
+        public Item(string name, int extraStrength)
         {
-            this.Name = name;
+            ExtraStrength = extraStrength;
+            Name = name;
         }
 
         public string Name { get; private set; }
-        
+        public int ExtraStrength { get; private set; }
+
     }
 }
